@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Task from './Task';
 import axios from 'axios';
 
 export class TasksList extends Component {
@@ -68,16 +69,12 @@ export class TasksList extends Component {
 				<ul>
 					{
 						todosList.map(todo => (
-							<li key={todo._id} >
-								<input
-									type="checkbox"
-									checked={ todo.done }
-									onChange={ () => this.markTodoAsDone(todo._id) }
-									label={ todo.title }
-								/>
-								<span className={ todo.isDone ? "done" : "" } >{ todo.title }</span>
-								<button onClick={ () => this.removeTodo(todo._id) } >X</button>
-							</li>
+							<Task
+								key={todo._id}
+								todo={todo}
+								markTodoAsDone={() => this.markTodoAsDone(todo._id)}
+								removeTodo={() => this.removeTodo(todo._id)}
+							/>
 						))
 					}
 				</ul>
