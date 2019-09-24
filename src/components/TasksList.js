@@ -99,7 +99,6 @@ export default connect(
 	mapActionsToProps
 )(TasksList);
 
-
 /* const mapDispatchToProps = (dispatch) => ({
 	fetchTodos: () => { dispatch(fetchTodos()) },
 	addTodo: (data) => { dispatch(addTodo(data)) },
