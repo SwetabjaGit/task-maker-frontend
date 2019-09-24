@@ -21,4 +21,4 @@ export class Task extends Component {
 	}
 }
 
-export default Task
+export default Task;
