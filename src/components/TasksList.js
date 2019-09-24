@@ -1,96 +1,109 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Task from './Task';
-import axios from 'axios';
 
-export class TasksList extends Component {
+// Redux stuff
+import { connect } from 'react-redux';
+import {
+	fetchTodos,
+	addTodo,
+	removeTodo,
+	markDone,
+	setTodoLabel
+} from '../redux/actions/todoActions';
 
-	state = {
-		loaded: false,
-		nextTodoId: 0,
-		newTodoLabel: "",
-		todosList: null
-	}
 
-	componentDidMount() {
-		const url = 'http://demo7326610.mockable.io/api/tasks';
-		axios.get(url)
-			.then((res) => {
-				this.setState({
-					loaded: true,
-					todosList: res.data,
-					nextTodoId: res.data.length
-				});
-				console.log(res.data);
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	}
-
-    markTodoAsDone = (_id) => {
-		this.state.todosList.findIndex(todo => todo._id === _id);
-		let newList = this.state.todosList;
-		newList.map(todo => todo._id === _id ? todo.isDone = !todo.isDone : todo);
-		this.setState({
-			todosList: newList
-		});
-	};
-
-	addNewTodo = () => {
-		const newTodo = {
-			"_id": this.state.nextTodoId,
-			"title": this.state.newTodoLabel,
-			"isDone": false
-		};
-		let newList = this.state.todosList;
-		newList.push(newTodo);
-		this.setState({
-			todosList: newList,
-			newTodoLabel: "",
-			nextTodoId: newList.length
-		});
-		console.log(this.state.todosList);
-	};
-
-	removeTodo = (_id) => {
-		const index = this.state.todosList.findIndex(todo => todo._id === _id);
-		let newList = this.state.todosList;
-		newList.splice(index, 1);
-		this.setState({ todosList: newList });
-		if(this.state.todosList.length === 0){
-			this.setState({ nextTodoId: 0 });
-		}
+class TasksList extends Component {
+	
+	componentDidMount = () => {
+		this.props.fetchTodos();
 	};
 
 	render() {
-		const { loaded, newTodoLabel, todosList } = this.state;
-		return loaded ? (
+		
+		const {
+			UI: {
+				loading
+			},
+			TODOS: {
+				nextTodoId,
+				newTodoLabel,
+				todosList
+			}
+		} = this.props;
+
+		const addNewTodo = () => {
+			const newTodo = {
+				"_id": nextTodoId,
+				"title": newTodoLabel,
+				"isDone": false
+			};
+			this.props.addTodo(newTodo);
+		}
+
+		return !loading ? (
 			<div className="todo-list">
 				<ul>
-					{
+					{   
 						todosList.map(todo => (
 							<Task
 								key={todo._id}
 								todo={todo}
-								markTodoAsDone={() => this.markTodoAsDone(todo._id)}
-								removeTodo={() => this.removeTodo(todo._id)}
+								markTodoAsDone={() => this.props.markDone(todo._id)}
+								removeTodo={() => this.props.removeTodo(todo._id)}
 							/>
-						))
+						))  
 					}
 				</ul>
 				<div className="new-todo">
 					<input
 						type="text"
 						value={ newTodoLabel }
-						onChange={ ({ target }) => this.setState({ newTodoLabel: target.value }) }
+						onChange={ ({ target }) => this.props.setTodoLabel(target.value) }
 					/>
-					<button onClick={ this.addNewTodo } >Add</button>
+					<button onClick={ addNewTodo } >Add</button>
 				</div>
 			</div>
 		) : (
 			<div>Loading...</div>
 		);
 	}
+
 }
 
-export default TasksList
+TasksList.propTypes = {
+	fetchTodos: PropTypes.func.isRequired,
+	addTodo: PropTypes.func.isRequired,
+	removeTodo: PropTypes.func.isRequired,
+	markDone: PropTypes.func.isRequired,
+	setTodoLabel: PropTypes.func.isRequired,
+	UI: PropTypes.object.isRequired,
+	TODOS: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+	UI: state.UI,
+	TODOS: state.TODOS
+});
+
+const mapActionsToProps = {
+	fetchTodos,
+	addTodo,
+	removeTodo,
+	markDone,
+	setTodoLabel
+};
+
+export default connect(
+	mapStateToProps,
+	mapActionsToProps
+)(TasksList);
+
+
+/* const mapDispatchToProps = (dispatch) => ({
+	fetchTodos: () => { dispatch(fetchTodos()) },
+	addTodo: (data) => { dispatch(addTodo(data)) },
+	removeTodo: (id) => { dispatch(removeTodo(id)) },
+	markDone: (id) => { dispatch(markDone(id)) },
+	setTodoLabel: (data) => { dispatch(setTodoLabel(data)) }
+}); */
