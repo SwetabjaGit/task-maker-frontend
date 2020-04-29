@@ -18,7 +18,7 @@ import axios from 'axios';
 export const fetchTodos = () => (dispatch) => {
 	console.log('Fetching TODOS List');
 	dispatch({ type: LOADING_UI });
-  const url ='https://demo1810835.mockable.io/api/tasks';
+  const url ='https://my-json-server.typicode.com/Stabja/demo/tasks';
 	axios.get(url)
 		.then((res) => {
 			console.log('Todos:', res.data);
