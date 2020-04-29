@@ -3,11 +3,16 @@ import {
 	ADD_TODO,
 	REMOVE_TODO,
 	MARK_DONE,
-	SET_TODO_LABEL
+	SET_TODO_LABEL,
+	FILTER_ALL,
+	FILTER_PENDING,
+	FILTER_COMPLETED
 } from '../actionTypes';
 
 const initialState = {
 	todosList: [],
+	pendingList: [],
+	completedList: [],
 	nextTodoId: 0,
 	newTodoLabel: ""
 }
@@ -46,7 +51,21 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				newTodoLabel: action.payload
-			}
+			};
+		case FILTER_ALL:
+			return {
+				...state
+			};
+		case FILTER_PENDING:
+			return {
+				...state,
+				pendingList: state.todosList.filter(todo => !todo.isDone)
+			};
+		case FILTER_COMPLETED:
+			return {
+				...state,
+				completedList: state.todosList.filter(todo => todo.isDone)
+			};
 		default:
 			return state;
 	}

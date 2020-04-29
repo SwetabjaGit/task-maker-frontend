@@ -39,6 +39,7 @@ input {
   background: #586e75;
   border: none;
   color: #fdf6e3;
+  padding: 4px;
 }
 
 button {
@@ -49,4 +50,13 @@ button {
 
 .new-todo button {
   background: #859900;
+  margin: 4px;
+  padding: 4px;
+  min-width: 60px;
+}
+
+.visibility-filters button{
+  background: #859900;
+  margin: 4px;
+  padding: 4px;
 }

@@ -1,13 +1,16 @@
 import {
 	SET_ERRORS,
-    CLEAR_ERRORS,
-    LOADING_UI,
+  CLEAR_ERRORS,
+  LOADING_UI,
 	STOP_LOADING_UI,
 	SET_TODOS,
 	ADD_TODO,
 	REMOVE_TODO,
 	MARK_DONE,
-	SET_TODO_LABEL
+	SET_TODO_LABEL,
+	FILTER_ALL,
+	FILTER_PENDING,
+	FILTER_COMPLETED
 } from '../actionTypes';
 import axios from 'axios';
 
@@ -15,7 +18,7 @@ import axios from 'axios';
 export const fetchTodos = () => (dispatch) => {
 	console.log('Fetching TODOS List');
 	dispatch({ type: LOADING_UI });
-	const url = 'http://demo7326610.mockable.io/api/tasks';
+  const url ='https://demo1810835.mockable.io/api/tasks';
 	axios.get(url)
 		.then((res) => {
 			console.log('Todos:', res.data);
@@ -62,6 +65,24 @@ export const setTodoLabel = (data) => (dispatch) => {
 	dispatch({
 		type: SET_TODO_LABEL,
 		payload: data
+	});
+};
+
+export const filterAll = () => (dispatch) => {
+	dispatch({
+		type: FILTER_ALL
+	});
+};
+
+export const filterPending = () => (dispatch) => {
+	dispatch({
+		type: FILTER_PENDING
+	});
+};
+
+export const filterCompleted = () => (dispatch) => {
+	dispatch({
+		type: FILTER_COMPLETED
 	});
 };
 

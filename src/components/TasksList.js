@@ -9,11 +9,18 @@ import {
 	addTodo,
 	removeTodo,
 	markDone,
-	setTodoLabel
+	setTodoLabel,
+	filterAll,
+	filterPending,
+	filterCompleted
 } from '../redux/actions/todoActions';
 
 
 class TasksList extends Component {
+
+	state = {
+		displayList: []
+	};
 	
 	componentDidMount = () => {
 		this.props.fetchTodos();
@@ -28,7 +35,9 @@ class TasksList extends Component {
 			TODOS: {
 				nextTodoId,
 				newTodoLabel,
-				todosList
+				todosList,
+				pendingList,
+				completedList
 			}
 		} = this.props;
 
@@ -39,21 +48,30 @@ class TasksList extends Component {
 				"isDone": false
 			};
 			this.props.addTodo(newTodo);
-		}
+		};
 
-		return !loading ? (
+		const changeState = (givenList, callback) => {
+			callback();
+			this.setState({ displayList: givenList });
+		};
+
+		let renderList = !loading ? (
+			this.state.displayList.map(todo => (
+				<Task
+					key={todo._id}
+					todo={todo}
+					markTodoAsDone={() => this.props.markDone(todo._id)}
+					removeTodo={() => this.props.removeTodo(todo._id)}
+				/>
+			))
+		) : (
+			<p>Loading...</p>
+		);
+
+		return  (
 			<div className="todo-list">
 				<ul>
-					{   
-						todosList.map(todo => (
-							<Task
-								key={todo._id}
-								todo={todo}
-								markTodoAsDone={() => this.props.markDone(todo._id)}
-								removeTodo={() => this.props.removeTodo(todo._id)}
-							/>
-						))  
-					}
+					{ renderList }
 				</ul>
 				<div className="new-todo">
 					<input
@@ -63,10 +81,13 @@ class TasksList extends Component {
 					/>
 					<button onClick={ addNewTodo } >Add</button>
 				</div>
+				<div className="visibility-filters">
+					<button onClick={ () => { changeState(todosList, this.props.filterAll) } } >All Tasks</button>
+					<button onClick={ () => { changeState(pendingList, this.props.filterPending ) } } >Pending</button>
+					<button onClick={ () => { changeState(completedList, this.props.filterCompleted ) } } >Completed</button>
+				</div>
 			</div>
-		) : (
-			<div>Loading...</div>
-		);
+		)
 	}
 
 }
@@ -77,6 +98,9 @@ TasksList.propTypes = {
 	removeTodo: PropTypes.func.isRequired,
 	markDone: PropTypes.func.isRequired,
 	setTodoLabel: PropTypes.func.isRequired,
+	filterAll: PropTypes.func.isRequired,
+	filterPending: PropTypes.func.isRequired,
+	filterCompleted: PropTypes.func.isRequired,
 	UI: PropTypes.object.isRequired,
 	TODOS: PropTypes.object.isRequired
 };
@@ -91,7 +115,10 @@ const mapActionsToProps = {
 	addTodo,
 	removeTodo,
 	markDone,
-	setTodoLabel
+	setTodoLabel,
+	filterAll,
+	filterPending,
+	filterCompleted
 };
 
 export default connect(
