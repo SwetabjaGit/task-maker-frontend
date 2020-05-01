@@ -1,6 +1,6 @@
 {
   "name": "redux-todo-app",
-  "homepage": "https://taskiller.now.sh",
+  "homepage": "https://taskiller.netlify.app/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
