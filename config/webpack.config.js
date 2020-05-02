@@ -175,14 +175,14 @@ module.exports = function(webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
-        ? path.resolve(__dirname, '../build/static/js/[name].[contenthash:8].js')
-        : isEnvDevelopment && path.resolve(__dirname, '../build/static/js/bundle.js'),
+        ? '../build/static/js/[name].[contenthash:8].js'
+        : '../build/static/js/bundle.js',
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
-        ? path.resolve(__dirname, '../build/static/js/[name].[contenthash:8].chunk.js')
-        : isEnvDevelopment && path.resolve(__dirname, '../build/static/js/[name].chunk.js'),
+        ? '../build/static/js/[name].[contenthash:8].chunk.js'
+        : isEnvDevelopment && '../build/static/js/[name].chunk.js',
       // We inferred the "public path" (such as / or /my-project) from homepage.
       // We use "/" in development.
       publicPath: publicPath,
@@ -582,8 +582,8 @@ module.exports = function(webpackEnv) {
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
-          filename: path.resolve(__dirname, '../build/static/css/[name].[contenthash:8].css'),
-          chunkFilename: path.resolve(__dirname, '../build/static/css/[name].[contenthash:8].chunk.css'),
+          filename: '../build/static/css/[name].[contenthash:8].css',
+          chunkFilename: '../build/static/css/[name].[contenthash:8].chunk.css',
         }),
       // Generate an asset manifest file with the following content:
       // - "files" key: Mapping of all asset filenames to their corresponding
