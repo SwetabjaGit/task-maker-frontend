@@ -1,6 +1,6 @@
 {
   "name": "redux-todo-app",
-  "homepage": "https://redux-todo-app.stabja.now.sh/build/",
+  "homepage": "https://redux-todo-app.stabja.now.sh/redux-todo-app/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
