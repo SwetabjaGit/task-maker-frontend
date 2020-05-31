@@ -8,6 +8,7 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const FETCH_TODOS = 'FETCH_TODOS';
 export const SET_TODOS = 'SET_TODOS';
 export const ADD_TODO = 'ADD_TODO';
+export const UPDATE_TODO = 'UPDATE_TODO';
 export const REMOVE_TODO = 'REMOVE_TODO';
 export const MARK_DONE = 'MARK_DONE';
 export const SET_TODO_LABEL = 'SET_TODO_LABEL';

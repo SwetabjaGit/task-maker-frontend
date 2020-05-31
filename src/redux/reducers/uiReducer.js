@@ -1,8 +1,8 @@
 import {
 	SET_ERRORS,
-    CLEAR_ERRORS,
-    LOADING_UI,
-    STOP_LOADING_UI
+  CLEAR_ERRORS,
+  LOADING_UI,
+  STOP_LOADING_UI
 } from '../actionTypes';
 
 const initialState = {
