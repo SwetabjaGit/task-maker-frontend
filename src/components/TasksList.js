@@ -14,12 +14,13 @@ import {
 
 
 const TasksList = (props) => {
-  const { 
+  const {
     todosList, 
     fetchTodos, 
     removeTodo, 
     updateTodo, 
-    markDone
+    markDone,
+    loading
   } = props;
   const [tasksList, setTasksList] = useState([]);
 
@@ -32,7 +33,7 @@ const TasksList = (props) => {
     setTasksList(tasksList);
   }, [todosList]);
 
-  let renderList = todosList ? (
+  let renderList = !loading ? (
     todosList.map(task => (
       <Task
         key={task._id}
@@ -43,7 +44,7 @@ const TasksList = (props) => {
       />
     ))
   ) : (
-    <p>Loading...</p>
+    <div className="spinner-border text-warning"></div>
   );
   
   return  (
