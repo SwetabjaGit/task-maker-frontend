@@ -15,15 +15,23 @@ const initialState = {};
 
 const middleware = [thunk];
 
+let composeMiddleware = 
+  process.env.NODE_ENV === 'development'
+  ? compose(
+      applyMiddleware(...middleware),
+      process.env.NODE_ENV === 'development' && (
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+      )
+	) : (
+    compose(applyMiddleware(...middleware))
+  );
+
+ 
+
 const store = createStore(
 	rootReducer,
-	initialState,
-	compose(
-    applyMiddleware(...middleware),
-    process.env.NODE_ENV === 'development' && (
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
-	)
+  initialState,
+	composeMiddleware
 );
 
 export default store;
