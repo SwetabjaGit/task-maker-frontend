@@ -161,6 +161,3 @@ export const setErrors = (errMessage) => (dispatch) => {
 export const clearErrors = () => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };
-
-
-

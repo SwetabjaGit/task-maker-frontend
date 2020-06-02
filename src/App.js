@@ -9,16 +9,16 @@ import store from './redux/store';
 
 
 const App = () => {
-	return (
-		<Provider store={store}>
-			<div className="container main-app-page">
+  return (
+    <Provider store={store}>
+      <div className="container main-app-page">
         <h1>Task Maker</h1>
         <TaskForm>
           <TasksList />
         </TaskForm>
-			</div>
-		</Provider>
-	);
+      </div>
+    </Provider>
+  );
 };
 
 export default App;

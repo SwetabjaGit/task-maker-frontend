@@ -15,6 +15,11 @@ const Task  = ({ task, removeTodo, updateTodo, markDone }) => {
   const confirmEditRef = useRef(null);
   const modalId = 'modal_' + task._id;
 
+  /* const applyStrikeline = (target) => {
+    target === true
+    ? taskTitleRef.current.classList.add('strike')
+    : taskTitleRef.current.classList.remove('strike')
+  }; */
 
   const restoreTaskTitle = () => {
     if(placeholderValue === 'edit'){
@@ -29,14 +34,7 @@ const Task  = ({ task, removeTodo, updateTodo, markDone }) => {
       done: event.target.checked
     };
     markDone(task._id, updatedTask);
-    //applyStrikeline(event.target.checked);
   };
-
-  /* const applyStrikeline = (target) => {
-    target === true
-    ? taskTitleRef.current.classList.add('strike')
-    : taskTitleRef.current.classList.remove('strike')
-  }; */
 
   const handleTaskUpdate = (event) => {
     if(event.keyCode === 13 || confirmEditRef.current.contains(event.target)){
@@ -52,7 +50,6 @@ const Task  = ({ task, removeTodo, updateTodo, markDone }) => {
     setTaskTitle(event.target.value);
   };
 
-
   const displayCheckbox = (
     <input
       ref={checkboxEl}
@@ -64,7 +61,6 @@ const Task  = ({ task, removeTodo, updateTodo, markDone }) => {
       onChange={handleMarkDone}
     />
   );
-  
 
   const displayTaskTitle = (
     <label

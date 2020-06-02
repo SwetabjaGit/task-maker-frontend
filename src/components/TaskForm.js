@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addTodo } from '../redux/actions/todoActions';
@@ -8,25 +8,38 @@ import moment from 'moment';
 
 const TaskForm = (props) => {
   const { addTodo } = props;
+  const taskInputRef = useRef(null);
   const [newTaskTitle, setnewTaskTitle] = useState('');
 
-  const handleTaskSubmit = (event) => {
+
+  const handleTaskSubmitOnKeypress = (event) => {
     if(event.keyCode === 13){
-      const newTask = {
-        title: event.target.value,
-        done: false,
-        createdAt: moment().format(),
-        updatedAt: moment().format(),
-      };
-      console.log(newTask);
-      addTodo(newTask);
-      event.target.value = '';
+      handleTaskSubmit();
     }
+  };
+
+  const handleTaskSubmit = () => {
+    const newTask = {
+      title: taskInputRef.current.value,
+      done: false,
+      createdAt: moment().format(),
+      updatedAt: moment().format(),
+    };
+    console.log(newTask);
+    addTodo(newTask);
+    taskInputRef.current.value = '';
+    setnewTaskTitle('');
   };
 
   const handleInputChange = (event) => {
     setnewTaskTitle(event.target.value);
   };
+
+  const clearTaskInput = () => {
+    taskInputRef.current.value = '';
+    setnewTaskTitle('');
+  };
+
 
   return (
     <div>
@@ -35,12 +48,13 @@ const TaskForm = (props) => {
           <div className="form-group">
             <input
               id="create-task-input" 
+              ref={taskInputRef}
               className="form-control" 
               type="text" 
               placeholder="Add Task" 
               name="title"
               onChange={handleInputChange}
-              onKeyUp={handleTaskSubmit}
+              onKeyUp={handleTaskSubmitOnKeypress}
             />
           </div>
           <div className="button-group">
@@ -55,6 +69,7 @@ const TaskForm = (props) => {
             <button
               type="button"
               className="btn btn-success"
+              onClick={clearTaskInput}
             >
               Clear
             </button>
