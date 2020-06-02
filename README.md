@@ -1,4 +1,4 @@
-# TASKILLER
+# TASKMAKER
 Simple TODO app using React and Redux
 
 ## Netlify Server
