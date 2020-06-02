@@ -111,6 +111,7 @@ export const removeTodo = (id) => (dispatch) => {
   const url = baseUrl + `/tasks/task/${id}`;
   axios.delete(url)
     .then(res => {
+      //console.log('Removed Doc: ', res.data);
       dispatch({
         type: REMOVE_TODO,
         payload: res.data._id

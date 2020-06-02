@@ -26,8 +26,6 @@ let composeMiddleware =
     compose(applyMiddleware(...middleware))
   );
 
- 
-
 const store = createStore(
 	rootReducer,
   initialState,

@@ -7,10 +7,6 @@ import TasksList from './components/TasksList';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
-require('dotenv').config();
-
-console.log('environment: ', process.env.NODE_ENV);
-
 
 const App = () => {
 	return (
