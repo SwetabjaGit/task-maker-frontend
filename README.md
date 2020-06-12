@@ -2,7 +2,7 @@
 Simple TODO app using React and Redux
 
 ## Netlify Server
-https://taskiller.netlify.app/
+https://task-maker.netlify.app/
 
 ## Zeit Server
-https://taskiller.now.sh/
+https://taskmaker.now.sh/
